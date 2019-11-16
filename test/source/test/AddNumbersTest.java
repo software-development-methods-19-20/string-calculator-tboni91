@@ -25,4 +25,21 @@ public class AddNumbersTest {
         assertThat(StringCalculator.add("1,2"), is(3));
     }
 
+    @Test
+    void manyNumbers() {
+        assertThat(StringCalculator.add("1,2,3,4"), is(10));
+    }
+
+    @Test
+    void newlineNumbers() {
+        assertThat(StringCalculator.add("1\n,2"), is(3));
+        assertThat(StringCalculator.add("1,\n2"), is(3));
+    }
+
+    @Test
+    void delimetersNumbers() {
+        assertThat(StringCalculator.add("//;\n1;2"), is(3));
+        assertThat(StringCalculator.add("//-\n1-2"), is(3));
+    }
+
 }
