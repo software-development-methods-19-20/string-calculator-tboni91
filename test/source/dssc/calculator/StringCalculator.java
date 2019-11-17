@@ -19,7 +19,7 @@ public class StringCalculator {
             //IntStream token = Arrays.stream(numbers.replaceAll("\r\n|\r|\n","").split(",")).mapToInt(x-> Integer.parseInt(x));
             //IntStream negative = Arrays.stream(numbers.replaceAll("\r\n|\r|\n","").split(",")).mapToInt(x-> Integer.parseInt(x)).filter(x->x<0);
             //negative.forEach(System.out::println);
-            return token.reduce(0,(x,y)->x+y);*/
+            //return token.reduce(0,(x,y)->x+y);*/
             int sum = 0;
             String defaultDel = "[\n\r/,]+";
             String usedDel = defaultDel;
