@@ -47,4 +47,9 @@ public class AddNumbersTest {
         assertThat(StringCalculator.add("1,-2,1,-5"), is(new RuntimeException()));
     }
 
+    @Test
+    void biggerThan1kNumbers() {
+        assertThat(StringCalculator.add("1001,4"), is(4));
+    }
+
 }

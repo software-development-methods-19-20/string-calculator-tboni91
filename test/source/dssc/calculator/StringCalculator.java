@@ -27,9 +27,14 @@ public class StringCalculator {
             }
 
             String[] tokens = numbers.split(usedDel);
-            IntStream st = Arrays.stream(tokens).mapToInt(x -> Integer.parseInt(x));
+            int[] intNumbers = new int[tokens.length];
+            for (int i=0; i<tokens.length; i++)
+                intNumbers[i] = Integer.parseInt(tokens[i]);
+
+            IntStream st = Arrays.stream(intNumbers);
+
             if (st.anyMatch(x -> x<0)) {
-                IntStream negative = Arrays.stream(tokens).mapToInt(x -> Integer.parseInt(x)).filter(x -> x<0);
+                IntStream negative = Arrays.stream(intNumbers).filter(x -> x<0);
                 int[] neg = negative.toArray();
                 String negativeNumber = "";
                 for (int i:neg)
@@ -37,8 +42,9 @@ public class StringCalculator {
                 //System.out.println(negativeNumber);
                 throw new RuntimeException("Negative not allowed: "+negativeNumber);
             } else {
-                for (String num:tokens) {
-                    sum += Integer.parseInt(num);
+                for (int num:intNumbers) {
+                    if (num <= 1000)
+                        sum += num;
                 }
                 return sum;
             }
