@@ -39,7 +39,11 @@ public class AddNumbersTest {
     @Test
     void delimetersNumbers() {
         assertThat(StringCalculator.add("//;\n1;2"), is(3));
-        assertThat(StringCalculator.add("//-\n1-2"), is(3));
+        assertThat(StringCalculator.add("//:\n1:2"), is(3));
     }
 
+    @Test
+    void negativeNumbers() {
+        assertThat(StringCalculator.add("1,-2,1,-5"), is(-5));
+    }
 }
