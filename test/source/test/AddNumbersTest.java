@@ -52,4 +52,14 @@ public class AddNumbersTest {
         assertThat(StringCalculator.add("1001,4"), is(4));
     }
 
+    @Test
+    void longDelNumbers() {
+        assertThat(StringCalculator.add("//[:::]\n1:::2:::3"), is(6));
+    }
+
+    @Test
+    void multipleDelNumbers() {
+        assertThat(StringCalculator.add("//[:][°]\n1:2°3"), is(6));
+    }
+
 }

@@ -20,10 +20,25 @@ public class StringCalculator {
             int sum = 0;
             String defaultDel = "[\n\r/,]+";
             String usedDel = defaultDel;
+            int size = numbers.length();
 
             if (numbers.contains("//")) {
-                usedDel = "[" + numbers.substring(2,3) +"/,]+";
-                numbers = numbers.substring(3,numbers.length()).replaceAll("\r\n|\r|\n","");
+                int[] longDel = checkLongDel(numbers);
+                if ((longDel[0] != 0) && (longDel[1] != 0)) {
+                    if ((longDel[2] != 0) && (longDel[3] != 0)) {
+                        usedDel = "[" + numbers.substring(longDel[0]+1,longDel[1]) + numbers.substring(longDel[2]+1,longDel[3]) +"/,]+";
+                        numbers = numbers.substring(longDel[3]+1,size).replaceAll("\r\n|\r|\n","");
+                        //System.out.println("usedDel: "+usedDel);
+                        //System.out.println("number: "+numbers);
+                    } else {
+                        usedDel = "[" + numbers.substring(longDel[0]+1,longDel[1]) +"/,]+";
+                        numbers = numbers.substring(longDel[1]+1,size).replaceAll("\r\n|\r|\n","");
+                    }
+                }
+                else {
+                    usedDel = "[" + numbers.substring(2,3) +"/,]+";
+                    numbers = numbers.substring(3,size).replaceAll("\r\n|\r|\n","");
+                }
             }
 
             String[] tokens = numbers.split(usedDel);
@@ -37,14 +52,16 @@ public class StringCalculator {
                 IntStream negative = Arrays.stream(intNumbers).filter(x -> x<0);
                 int[] neg = negative.toArray();
                 String negativeNumber = "";
-                for (int i:neg)
+                for (int i:neg) {
                     negativeNumber += i + " ";
+                }
                 //System.out.println(negativeNumber);
                 throw new RuntimeException("Negative not allowed: "+negativeNumber);
             } else {
                 for (int num:intNumbers) {
-                    if (num <= 1000)
+                    if (num <= 1000) {
                         sum += num;
+                    }
                 }
                 return sum;
             }
@@ -58,6 +75,19 @@ public class StringCalculator {
             //negative.forEach(System.out::println);
             //return token.reduce(0,(x,y)->x+y);*/
         }
+    }
+
+    private static int[] checkLongDel(String numbers) {
+        int[] index = new int[4];
+        for (int i=0, j=0; i<numbers.length(); i++) {
+            if ((numbers.charAt(i)) == '[') {
+                index[j++] = i;
+            }
+            if ((numbers.charAt(i)) == ']') {
+                index[j++] = i;
+            }
+        }
+        return index;
     }
 
 }
