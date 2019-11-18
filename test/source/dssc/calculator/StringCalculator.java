@@ -79,6 +79,7 @@ public class StringCalculator {
 
     private static int[] checkLongDel(String numbers) {
         int[] index = new int[4];
+        // max 2 delimeters but with length also longer than one char
         for (int i=0, j=0; i<numbers.length(); i++) {
             if ((numbers.charAt(i)) == '[') {
                 index[j++] = i;
