@@ -16,32 +16,20 @@ public class StringCalculator {
         if (numbers.isEmpty()) {
             return 0;
         } else {
-
             int sum = 0;
             String defaultDel = "[\n\r/,]+";
             String usedDel = defaultDel;
             int size = numbers.length();
+            int startNumber = numbers.indexOf("\n");
 
             if (numbers.contains("//")) {
-                int[] longDel = checkLongDel(numbers);
-                if ((longDel[0] != 0) && (longDel[1] != 0)) {
-                    if ((longDel[2] != 0) && (longDel[3] != 0)) {
-                        usedDel = "[" + numbers.substring(longDel[0]+1,longDel[1]) + numbers.substring(longDel[2]+1,longDel[3]) +"/,]+";
-                        numbers = numbers.substring(longDel[3]+1,size).replaceAll("\r\n|\r|\n","");
-                        //System.out.println("usedDel: "+usedDel);
-                        //System.out.println("number: "+numbers);
-                    } else {
-                        usedDel = "[" + numbers.substring(longDel[0]+1,longDel[1]) +"/,]+";
-                        numbers = numbers.substring(longDel[1]+1,size).replaceAll("\r\n|\r|\n","");
-                    }
-                }
-                else {
-                    usedDel = "[" + numbers.substring(2,3) +"/,]+";
-                    numbers = numbers.substring(3,size).replaceAll("\r\n|\r|\n","");
-                }
+                String specialDels = numbers.substring(2, startNumber).replaceAll("[|]", "");
+                numbers = numbers.substring(startNumber+1, size).replaceAll("\r\n|\r|\n","");
+                usedDel = "[" + specialDels +"/,]+";
             }
 
             String[] tokens = numbers.split(usedDel);
+
             int[] intNumbers = new int[tokens.length];
             for (int i=0; i<tokens.length; i++)
                 intNumbers[i] = Integer.parseInt(tokens[i]);
@@ -76,19 +64,4 @@ public class StringCalculator {
             //return token.reduce(0,(x,y)->x+y);*/
         }
     }
-
-    private static int[] checkLongDel(String numbers) {
-        int[] index = new int[4];
-        // max 2 delimeters but with length also longer than one char
-        for (int i=0, j=0; i<numbers.length(); i++) {
-            if ((numbers.charAt(i)) == '[') {
-                index[j++] = i;
-            }
-            if ((numbers.charAt(i)) == ']') {
-                index[j++] = i;
-            }
-        }
-        return index;
-    }
-
 }

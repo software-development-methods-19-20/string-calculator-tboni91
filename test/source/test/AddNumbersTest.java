@@ -3,9 +3,12 @@ package test;
 import dssc.calculator.StringCalculator;
 import org.junit.jupiter.api.Test;
 
+import java.awt.event.TextEvent;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class AddNumbersTest {
@@ -60,6 +63,7 @@ public class AddNumbersTest {
     @Test
     void multipleDelNumbers() {
         assertThat(StringCalculator.add("//[:][°]\n1:2°3"), is(6));
+        assertThat(StringCalculator.add("//[:][°][;]\n1:2°3;4"), is(10));
     }
 
     @Test
